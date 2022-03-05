@@ -87,7 +87,7 @@ sec2.id="main_sec"
 div2.appendChild(sec2)
 var tb=document.createElement('table')
 sec2.appendChild(tb)
-tb.id="main_table"
+tb.id="list"
 tb.className="list"
 var thead= document.createElement('thead')
 tb.appendChild(thead)
@@ -159,7 +159,7 @@ button.setAttribute("onClick", "SaveData")
 
 //Insert the data
 function insertNewRecord(data) {
-    var table = document.querySelector(".list");
+    var table = document.getElementById("list").getElementsByTagName('tbody')[0];
     var newRow = table.insertRow(table.length);
     var cell1 = newRow.insertCell(0);
     var cell2 = newRow.insertCell(1);
@@ -168,23 +168,49 @@ function insertNewRecord(data) {
     cell1.innerHTML = data.fname;
     cell2.innerHTML = data.roll;
     cell3.innerHTML = data.mobile;
-    cell4.innerHTML = "<button id='editpro' onClick='edit(this)' >Edit</button> <button class='dlt' >Delete</button>";
+    cell4.innerHTML = "<button class='editpro' id='editpro' >Edit</button> <button class='dlt' id='dlt'>Delete</button>";
+    (function () {
+    function edit() {
+           
+           var sel=document.querySelector('.editpro').parentElement.parentElement;
+           console.log(sel);
+              // selectedRow = td.parentElement.parentElement;
+              // document.getElementById("fname").value = selectedRow.cells[0].innerHTML;
+              // document.getElementById("roll").value = selectedRow.cells[1].innerHTML;
+              // document.getElementById("mobile").value = selectedRow.cells[2].innerHTML;
+              }
+              document.getElementById('editpro').addEventListener('click', edit(this));
+    })();
+
+
+
+//   (function () {
+//   function del(dl) {
+//     var sel1=dl.parentElement.parentElement;
+//     console.log(sel1);
     
-  
+//         // row = td.parentElement.parentElement;
+//         // sel.remove();
+//         // resetForm();
+    
+//   }
+
+//   document.getElementById('dlt').addEventListener('click', del(this), true);
+// })();
     //     if (confirm('Successfully added')) {
         
     // }
 }
 
 //Edit the data
-function edit(kuchbhi) {
-  console.log("msg....")
-    // selectedRow = td.parentElement.parentElement;
-    // document.getElementById("fname").value = selectedRow.cells[0].innerHTML;
-    // document.getElementById("roll").value = selectedRow.cells[1].innerHTML;
-    // document.getElementById("mobile").value = selectedRow.cells[2].innerHTML;
+// function edit() {
+//   console.log("msg....")
+//     // selectedRow = td.parentElement.parentElement;
+//     // document.getElementById("fname").value = selectedRow.cells[0].innerHTML;
+//     // document.getElementById("roll").value = selectedRow.cells[1].innerHTML;
+//     // document.getElementById("mobile").value = selectedRow.cells[2].innerHTML;
     
-}
+// }
 function updateRecord(formData) {
     selectedRow.cells[0].innerHTML = formData.fname;
     selectedRow.cells[1].innerHTML = formData.roll;
@@ -242,7 +268,7 @@ b.style.margin="5px 0 10px"
 b.style.backgroundColor="#3B5999"
 
 // design for data show and delete
-var trow=document.getElementById('main_table')
+var trow=document.getElementById('list')
 trow.style.backgroundColor="#3B5999"
 trow.style.color="#ffffff"
 trow.style.minWidth="500px"
