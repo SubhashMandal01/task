@@ -10,16 +10,6 @@ document.body.appendChild(div)
 var form=document.createElement('form');
 form.id='formId'
 
-
-// var table1=document.createElement('table');
-// div.appendChild(table1)
-// var trr=document.createElement('tr')
-// table1.appendChild(trr)
-// var tdd= document.createElement('td')
-// trr.appendChild(tdd)
-// tdd.appendChild(form)
-
-
 div.appendChild(form)
 //label And input1
 var label=document.createElement('label');
@@ -124,10 +114,10 @@ button.setAttribute("onClick", "SaveData")
 
  let stdArray = [];
  var selectedRow = null
+ 
     const SaveData = (ev) => 
     {
       ev.preventDefault();
-
        let stdArray = [];
         let stdObj = {
           fullName: document.getElementById("fname").value,
@@ -137,30 +127,26 @@ button.setAttribute("onClick", "SaveData")
         };
         stdArray.push(stdObj);  
 
+       const myJson = JSON.stringify(stdArray);
+        localStorage.setItem("StudentJson", myJson);
 
+        const text = localStorage.getItem("StudentJson");
+        obj = JSON.parse(text);
+   
        var formData = readFormData();
-        if (selectedRow == null){
+        if (selectedRow == null)
+        {
             insertNewRecord(formData);
-    }
-        else{
+        }
+        else
+        {
             updateRecord(formData);
-    }
+        }
         resetForm();
-
-
-        function readFormData() {
-    var formData = {};
-    formData["fname"] = document.getElementById("fname").value;
-    formData["roll"] = document.getElementById("roll").value;
-    formData["mobile"] = document.getElementById("mobile").value;
-    
-    return formData;
-}
-
-//Insert the data
-function insertNewRecord(data) {
-    var table = document.getElementById("list").getElementsByTagName('tbody')[0];
-    var newRow = table.insertRow(table.length);
+function insertNewRecord(data) 
+{
+    var table = document.getElementById("tabody");
+    var newRow = table.insertRow();
     var cell1 = newRow.insertCell(0);
     var cell2 = newRow.insertCell(1);
     var cell3 = newRow.insertCell(2);
@@ -168,69 +154,60 @@ function insertNewRecord(data) {
     cell1.innerHTML = data.fname;
     cell2.innerHTML = data.roll;
     cell3.innerHTML = data.mobile;
-    cell4.innerHTML = "<button class='editpro' id='editpro' >Edit</button> <button class='dlt' id='dlt'>Delete</button>";
-    (function () {
-    function edit() {
-           
-           var sel=document.querySelector('.editpro').parentElement.parentElement;
-           console.log(sel);
-              // selectedRow = td.parentElement.parentElement;
-              // document.getElementById("fname").value = selectedRow.cells[0].innerHTML;
-              // document.getElementById("roll").value = selectedRow.cells[1].innerHTML;
-              // document.getElementById("mobile").value = selectedRow.cells[2].innerHTML;
-              }
-              document.getElementById('editpro').addEventListener('click', edit(this));
-    })();
-
-
-
-//   (function () {
-//   function del(dl) {
-//     var sel1=dl.parentElement.parentElement;
-//     console.log(sel1);
-    
-//         // row = td.parentElement.parentElement;
-//         // sel.remove();
-//         // resetForm();
-    
-//   }
-
-//   document.getElementById('dlt').addEventListener('click', del(this), true);
-// })();
-    //     if (confirm('Successfully added')) {
-        
-    // }
+    cell4.innerHTML = `<button class='editpro' id='editpro' onclick="edit(this)" >Edit</button> <button class='dlt' id='dlt' onclick="Delete(this)">Delete</button>`;
 }
 
+
+
+//Insert the data
+
+
 //Edit the data
-// function edit() {
-//   console.log("msg....")
-//     // selectedRow = td.parentElement.parentElement;
-//     // document.getElementById("fname").value = selectedRow.cells[0].innerHTML;
-//     // document.getElementById("roll").value = selectedRow.cells[1].innerHTML;
-//     // document.getElementById("mobile").value = selectedRow.cells[2].innerHTML;
+// 
+
+//Delete the data
+
+
+//Reset the data
+
+}
+
+
+
+
+function Delete(td)
+{
+    // let rowData=td.parentElement.parentElement;
+    // console.log(rowData.children[1]);
+    if (confirm('Do you want to delete this record?')) 
+    {
+      let rowData= document.getElementById('tabody')
+        rowData.deleteRow(td);
+       
+        resetForm();
+      }
+}
+
+function edit(td) 
+{
+  // console.log("msg....")
+    selectedRow = td.parentElement.parentElement;
+    document.getElementById("fname").value = selectedRow.cells[0].innerHTML;
+    document.getElementById("roll").value = selectedRow.cells[1].innerHTML;
+    document.getElementById("mobile").value = selectedRow.cells[2].innerHTML;
     
-// }
-function updateRecord(formData) {
+}
+
+function updateRecord(formData) 
+{
     selectedRow.cells[0].innerHTML = formData.fname;
     selectedRow.cells[1].innerHTML = formData.roll;
     selectedRow.cells[2].innerHTML = formData.mobile;
     
 }
 
-//Delete the data
-
-// function onDelete() {
-
-//     if (confirm('Do you want to delete this record?')) {
-//         row = td.parentElement.parentElement;
-//         document.getElementById('tableRow').remove();
-//         resetForm();
-//     }
-// }
-
-//Reset the data
-function resetForm() {
+function resetForm() 
+{
     document.getElementById("fname").value = '';
     document.getElementById("roll").value = '';
     document.getElementById("mobile").value = '';
@@ -238,12 +215,15 @@ function resetForm() {
     selectedRow = null;
 }
 
-
-
-      
+function readFormData() 
+{
+    var formData = {};
+    formData["fname"] = document.getElementById("fname").value;
+    formData["roll"] = document.getElementById("roll").value;
+    formData["mobile"] = document.getElementById("mobile").value;
     
-
-	  }
+    return formData;
+}
 
 // design for student form
 var body=document.querySelector('body');
