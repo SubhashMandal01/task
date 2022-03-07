@@ -115,9 +115,9 @@ button.setAttribute("onClick", "SaveData")
  let stdArray = [];
  var selectedRow = null
  
-    const SaveData = (ev) => 
+    const SaveData = (e) => 
     {
-      ev.preventDefault();
+      e.preventDefault();
        let stdArray = [];
         let stdObj = {
           fullName: document.getElementById("fname").value,
@@ -127,22 +127,27 @@ button.setAttribute("onClick", "SaveData")
         };
         stdArray.push(stdObj);  
 
-       const myJson = JSON.stringify(stdArray);
+       let myJson = JSON.stringify(stdArray);
         localStorage.setItem("StudentJson", myJson);
 
-        const text = localStorage.getItem("StudentJson");
+        let text = localStorage.getItem("StudentJson");
         obj = JSON.parse(text);
    
        var formData = readFormData();
         if (selectedRow == null)
         {
             insertNewRecord(formData);
+
         }
         else
         {
             updateRecord(formData);
         }
-        resetForm();
+        resetForm();       
+
+
+}
+//Insert the data 
 function insertNewRecord(data) 
 {
     var table = document.getElementById("tabody");
@@ -156,25 +161,9 @@ function insertNewRecord(data)
     cell3.innerHTML = data.mobile;
     cell4.innerHTML = `<button class='editpro' id='editpro' onclick="edit(this)" >Edit</button> <button class='dlt' id='dlt' onclick="Delete(this)">Delete</button>`;
 }
-
-
-
-//Insert the data
-
-
-//Edit the data
-// 
+// .....................................................
 
 //Delete the data
-
-
-//Reset the data
-
-}
-
-
-
-
 function Delete(td)
 {
     // let rowData=td.parentElement.parentElement;
@@ -183,11 +172,13 @@ function Delete(td)
     {
       let rowData= document.getElementById('tabody')
         rowData.deleteRow(td);
-       
+     
         resetForm();
       }
 }
+// ...............................................
 
+//Edit the data
 function edit(td) 
 {
   // console.log("msg....")
@@ -197,7 +188,9 @@ function edit(td)
     document.getElementById("mobile").value = selectedRow.cells[2].innerHTML;
     
 }
+// .............................................
 
+// update
 function updateRecord(formData) 
 {
     selectedRow.cells[0].innerHTML = formData.fname;
@@ -205,7 +198,9 @@ function updateRecord(formData)
     selectedRow.cells[2].innerHTML = formData.mobile;
     
 }
+// ............................................
 
+//Reset form
 function resetForm() 
 {
     document.getElementById("fname").value = '';
@@ -214,6 +209,7 @@ function resetForm()
     
     selectedRow = null;
 }
+// ....................................
 
 function readFormData() 
 {
@@ -224,7 +220,7 @@ function readFormData()
     
     return formData;
 }
-
+// ............................
 // design for student form
 var body=document.querySelector('body');
 body.style.backgroundImage="url('back.png')";
