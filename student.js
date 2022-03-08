@@ -67,7 +67,6 @@ button.className='btn1'
 button.id='btn';
 button.textContent="Save";
 form.appendChild(button);
-
 // Creation of Show and delete table
 var div2=document.createElement('div')
 div2.id="contain_div";
@@ -85,21 +84,21 @@ thead.id="tableHead"
 var trow= document.createElement('tr')
 trow.id="tableRow"
 thead.appendChild(trow)
-var th=document.createElement('th')
-th.id="theading"
-th.textContent="Name"
-trow.appendChild(th)
-var th1=document.createElement('th')
-trow.appendChild(th1)
-th1.id="theading1"
-th1.textContent="Roll Number"
-var th2=document.createElement('th')
+let th2=document.createElement('th')
+th2.id="theading"
+th2.textContent="Name"
 trow.appendChild(th2)
-th2.id="theading2"
-th2.textContent="Mobile Number"
-var th3=document.createElement('th')
+let th3=document.createElement('th')
 trow.appendChild(th3)
-th2.id="theading2"
+th3.id="theading"
+th3.textContent="Roll Number"
+let th4=document.createElement('th')
+trow.appendChild(th4)
+th4.id="theading"
+th4.textContent="Mobile Number"
+let th5=document.createElement('th')
+trow.appendChild(th5)
+th5.id="theading"
 var tbody=document.createElement('tbody')
 tbody.id="tabody"
 tb.appendChild(tbody)
@@ -118,21 +117,20 @@ button.setAttribute("onClick", "SaveData")
     const SaveData = (e) => 
     {
       e.preventDefault();
-       let stdArray = [];
+     
         let stdObj = {
           fullName: document.getElementById("fname").value,
           roll_number: document.getElementById("roll").value,
           mobile: document.getElementById("mobile").value,
         
         };
-        stdArray.push(stdObj);  
 
-       let myJson = JSON.stringify(stdArray);
+       stdArray.push(stdObj);  
+        const myJson = JSON.stringify(stdArray);
         localStorage.setItem("StudentJson", myJson);
-
-        let text = localStorage.getItem("StudentJson");
+        const text = localStorage.getItem("StudentJson");
         obj = JSON.parse(text);
-   
+
        var formData = readFormData();
         if (selectedRow == null)
         {
@@ -142,25 +140,41 @@ button.setAttribute("onClick", "SaveData")
         else
         {
             updateRecord(formData);
-        }
-        resetForm();       
-
+            
+        }       
+        resetForm();
+        
 
 }
+
 //Insert the data 
-function insertNewRecord(data) 
+function insertNewRecord(data)
 {
-    var table = document.getElementById("tabody");
-    var newRow = table.insertRow();
-    var cell1 = newRow.insertCell(0);
-    var cell2 = newRow.insertCell(1);
-    var cell3 = newRow.insertCell(2);
-    var cell4 = newRow.insertCell(3);
-    cell1.innerHTML = data.fname;
-    cell2.innerHTML = data.roll;
-    cell3.innerHTML = data.mobile;
-    cell4.innerHTML = `<button class='editpro' id='editpro' onclick="edit(this)" >Edit</button> <button class='dlt' id='dlt' onclick="Delete(this)">Delete</button>`;
+   var table = document.getElementById("tabody");
+    let newRow = table.insertRow();
+    let cell1 = newRow.insertCell(0);
+    let cell2 = newRow.insertCell(1);
+    let cell3 = newRow.insertCell(2);
+    let cell4 = newRow.insertCell(3);
+    let cell5 = newRow.insertCell(4);
+    // var btn11=document.createElement('button')
+    cell1.textContent = data.fname;
+    cell2.textContent = data.roll;
+    cell3.textContent = data.mobile;
+    let btn11=document.createElement('button');
+
+    cell5.appendChild(btn11);
+    btn11.id='editpro'
+    btn11.textContent='Edit'
+    btn11.setAttribute("onClick","edit(this)")
+
+    let btn112=document.createElement('button');
+    cell5.appendChild(btn112);
+    btn112.id='dlt'
+    btn112.textContent='Delete'
+    btn112.setAttribute("onClick","Delete(this)")
 }
+
 // .....................................................
 
 //Delete the data
@@ -173,7 +187,7 @@ function Delete(td)
       let rowData= document.getElementById('tabody')
         rowData.deleteRow(td);
      
-        resetForm();
+         resetForm();
       }
 }
 // ...............................................
@@ -183,9 +197,9 @@ function edit(td)
 {
   // console.log("msg....")
     selectedRow = td.parentElement.parentElement;
-    document.getElementById("fname").value = selectedRow.cells[0].innerHTML;
-    document.getElementById("roll").value = selectedRow.cells[1].innerHTML;
-    document.getElementById("mobile").value = selectedRow.cells[2].innerHTML;
+    document.getElementById("fname").value = selectedRow.cells[0].textContent;
+    document.getElementById("roll").value = selectedRow.cells[1].textContent;
+    document.getElementById("mobile").value = selectedRow.cells[2].textContent;
     
 }
 // .............................................
@@ -193,9 +207,9 @@ function edit(td)
 // update
 function updateRecord(formData) 
 {
-    selectedRow.cells[0].innerHTML = formData.fname;
-    selectedRow.cells[1].innerHTML = formData.roll;
-    selectedRow.cells[2].innerHTML = formData.mobile;
+    selectedRow.cells[0].textContent = formData.fname;
+    selectedRow.cells[1].textContent = formData.roll;
+    selectedRow.cells[2].textContent = formData.mobile;
     
 }
 // ............................................
@@ -242,15 +256,12 @@ b.style.border="1px solid rgba(255,255,255,0.3)"
 b.style.borderRadius="5px"
 b.style.margin="5px 0 10px"
 b.style.backgroundColor="#3B5999"
-
 // design for data show and delete
 var trow=document.getElementById('list')
 trow.style.backgroundColor="#3B5999"
 trow.style.color="#ffffff"
 trow.style.minWidth="500px"
 trow.style.padding="5px"
-
-
 var tab=document.getElementById("tabody");
 tab.style.color="black";
 tab.style.fontSize="18px"
