@@ -107,16 +107,18 @@ th2.id="theading1"
 th2.textContent="Name"
 trow.appendChild(th2)
 let th3=document.createElement('th')
-trow.appendChild(th3)
 th3.id="theading2"
 th3.textContent="Roll Number"
+trow.appendChild(th3)
+
 let th4=document.createElement('th')
-trow.appendChild(th4)
 th4.id="theading3"
 th4.textContent="Mobile Number"
+trow.appendChild(th4)
+
 let th5=document.createElement('th')
-trow.appendChild(th5)
 th5.id="theading4"
+trow.appendChild(th5)
 
 var tbody=document.createElement('tbody')
 tbody.id="tabody"
@@ -150,12 +152,12 @@ button.setAttribute("onClick", "SaveData");
            stdArray.splice(selectedindex, 1, stdObj);
          }
          localStorage.StudentJson = JSON.stringify(stdArray);
-       init();
+       show();
        clear();
 }
 
 // when refreshing the browser the data wont be cleared with the help of this function.
-function init(){
+function show(){
   var tabody=document.getElementById('tabody').textContent="";
   if(localStorage.StudentJson)
   {
@@ -228,7 +230,7 @@ function Delete(index)
       stdArray.splice(index, 1);
       localStorage.StudentJson= JSON.stringify(stdArray);
        
-         init();
+         show();
       
      
       }
@@ -289,8 +291,8 @@ trow.style.border="1px solid white"
 trow.style.fontFamily="Lucida Console"
 var tab=document.getElementById("tableRow");
 tab.style.color="#03fcdf";
-tab.style.fontSize="18px"
-tab.style.fontFamily=" serif"
+tab.style.fontSize="15px"
+tab.style.fontFamily="Verdana"
 button121.style.color="#fff"
 button121.style.fontSize="15px"
 button121.style.border="1px solid rgba(255,255,255,0.3)"
